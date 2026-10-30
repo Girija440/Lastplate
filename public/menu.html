@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafeteria Menu | LastPlate</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <a href="/student-dashboard.html" class="brand-container">
+      <div class="brand-logo">LP</div>
+      <div>
+        <div class="brand-title">LastPlate</div>
+        <span class="brand-tagline">Good food. Zero uncertainty.</span>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="user-badge">
+        <span class="user-avatar-initial" id="user-display-initial">S</span>
+        <span id="user-display-name">Student</span>
+      </div>
+      <button class="btn btn-secondary btn-sm logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <span class="sidebar-heading">Student Portal</span>
+      <a href="/student-dashboard.html" class="sidebar-item">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="/menu.html" class="sidebar-item active">
+        <span>🍔</span> Browse Menu
+      </a>
+      <a href="/reservations.html" class="sidebar-item">
+        <span>📋</span> My Reservations
+      </a>
+      <div class="sidebar-spacer"></div>
+      <a href="#" class="sidebar-item logout-btn" style="color: var(--color-danger);">
+        <span>🚪</span> Log Out
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Cafeteria Menu & Food Stock</h1>
+          <p class="page-subtitle">Real-time availability of freshly prepared campus dishes.</p>
+        </div>
+        <a href="/reservations.html" class="btn btn-secondary">
+          <span>📋</span> View My Reservations
+        </a>
+      </div>
+
+      <!-- Filter & Search Bar -->
+      <div class="filter-bar">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="menu-search" class="form-control" placeholder="Search food by name (e.g. Sandwich, Coffee, Brownie)...">
+        </div>
+        <div id="category-filters" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-sm">All Categories</button>
+        </div>
+      </div>
+
+      <!-- Food Grid -->
+      <div class="food-grid" id="food-grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
+          <div class="loading-spinner"></div>
+          <p style="margin-top: 0.5rem; color: var(--color-text-muted);">Fetching freshly prepared campus food...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Reserve Food Modal Dialog -->
+  <div class="modal-backdrop" id="reserve-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Reserve Campus Food</h3>
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+
+      <form id="reserve-form">
+        <div class="modal-body">
+          <div style="background: var(--color-bg); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+            <div style="font-size: 1.15rem; font-weight: 700; color: var(--color-deep-plum);" id="modal-food-name">Food Name</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem;">
+              <span style="font-size: 0.95rem; font-weight: 600; color: var(--color-violet);" id="modal-food-price">₹0.00</span>
+              <span style="font-size: 0.85rem; color: var(--color-success); font-weight: 600;" id="modal-food-stock">In Stock</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reserve-quantity">Quantity to Reserve</label>
+            <input type="number" id="reserve-quantity" class="form-control" min="1" value="1" required>
+            <small style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+              Portions are verified atomically upon cafeteria confirmation.
+            </small>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-top: 1px solid var(--color-border); margin-top: 1.25rem;">
+            <span style="font-weight: 600; color: var(--color-text);">Total Amount:</span>
+            <span style="font-size: 1.4rem; font-weight: 800; color: var(--color-violet);" id="modal-total-price">₹0.00</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>
+

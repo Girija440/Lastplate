@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | LastPlate Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <a href="/admin-dashboard.html" class="brand-container">
+      <div class="brand-logo" style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%);">AD</div>
+      <div>
+        <div class="brand-title">LastPlate Admin</div>
+        <span class="brand-tagline">Cafeteria Operations & Inventory Control</span>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="user-badge" style="background: #EEF2FF; border-color: #C7D2FE; color: #3730A3;">
+        <span class="user-avatar-initial" id="user-display-initial" style="background: #4F46E5;">A</span>
+        <span id="user-display-name">Administrator</span>
+        <span style="font-size: 0.75rem; background: #4F46E5; color: #fff; padding: 0.1rem 0.4rem; border-radius: var(--radius-sm); font-weight: 700;">ADMIN</span>
+      </div>
+      <button class="btn btn-secondary btn-sm logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <span class="sidebar-heading">Operations Portal</span>
+      <a href="/admin-dashboard.html" class="sidebar-item active">
+        <span>📊</span> Overview & Stats
+      </a>
+      <a href="/admin-foods.html" class="sidebar-item">
+        <span>📦</span> Food Inventory
+      </a>
+      <a href="/admin-reservations.html" class="sidebar-item">
+        <span>📑</span> All Reservations
+      </a>
+      <div class="sidebar-spacer"></div>
+      <a href="#" class="sidebar-item logout-btn" style="color: var(--color-danger);">
+        <span>🚪</span> Log Out
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Cafeteria Overview & Control</h1>
+          <p class="page-subtitle">Real-time statistics on food inventory, student orders, and revenue.</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <a href="/admin-foods.html" class="btn btn-secondary">
+            <span>📦</span> Manage Inventory
+          </a>
+          <a href="/admin-reservations.html" class="btn btn-primary">
+            <span>⚡</span> Review Orders
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Foods</span>
+          <span class="stat-value" id="stat-total-foods">—</span>
+          <span class="stat-helper">Catalog menu items</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Available In Stock</span>
+          <span class="stat-value" id="stat-available-foods" style="color: var(--color-success);">—</span>
+          <span class="stat-helper">Ready for reservation</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Pending Approval</span>
+          <span class="stat-value" id="stat-pending-res" style="color: var(--color-warning);">—</span>
+          <span class="stat-helper">Requires staff action</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Approved Orders</span>
+          <span class="stat-value" id="stat-approved-res" style="color: var(--color-success);">—</span>
+          <span class="stat-helper">Stock deducted atomically</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Total Revenue</span>
+          <span class="stat-value" id="stat-total-revenue" style="color: var(--color-violet);">—</span>
+          <span class="stat-helper">From fulfilled orders</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Total Reservations</span>
+          <span class="stat-value" id="stat-total-res">—</span>
+          <span class="stat-helper">Lifetime campus orders</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Active Students</span>
+          <span class="stat-value" id="stat-total-students">—</span>
+          <span class="stat-helper">Registered diner accounts</span>
+        </div>
+      </div>
+
+      <!-- Pending Queue Section -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+          <div>
+            <h2 style="font-size: 1.2rem; font-weight: 700; color: var(--color-deep-plum);">
+              ⚡ Pending Reservations Queue
+            </h2>
+            <p style="font-size: 0.85rem; color: var(--color-text-muted);">
+              Approve to deduct inventory stock, or reject if unavailable.
+            </p>
+          </div>
+          <a href="/admin-reservations.html?status=PENDING" class="btn btn-secondary btn-sm">Full Approval Console →</a>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Student</th>
+                <th>Requested Food</th>
+                <th>Total Price</th>
+                <th>Submitted At</th>
+                <th>Staff Action</th>
+              </tr>
+            </thead>
+            <tbody id="pending-queue-body">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: 0.5rem;">Checking pending queue...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Registered Students Section -->
+      <div class="card">
+        <div style="margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.2rem; font-weight: 700; color: var(--color-deep-plum);">Registered Student Diners</h2>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Students registered on LastPlate with dining statistics.</p>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Email Address</th>
+                <th>Joined Date</th>
+                <th>Total Reservations</th>
+                <th>Total Spent</th>
+              </tr>
+            </thead>
+            <tbody id="registered-students-body">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: 0.5rem;">Loading students...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
+

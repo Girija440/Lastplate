@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation Management Console | LastPlate Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <a href="/admin-dashboard.html" class="brand-container">
+      <div class="brand-logo" style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%);">AD</div>
+      <div>
+        <div class="brand-title">LastPlate Admin</div>
+        <span class="brand-tagline">Cafeteria Operations & Inventory Control</span>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="user-badge" style="background: #EEF2FF; border-color: #C7D2FE; color: #3730A3;">
+        <span class="user-avatar-initial" id="user-display-initial" style="background: #4F46E5;">A</span>
+        <span id="user-display-name">Administrator</span>
+      </div>
+      <button class="btn btn-secondary btn-sm logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <span class="sidebar-heading">Operations Portal</span>
+      <a href="/admin-dashboard.html" class="sidebar-item">
+        <span>📊</span> Overview & Stats
+      </a>
+      <a href="/admin-foods.html" class="sidebar-item">
+        <span>📦</span> Food Inventory
+      </a>
+      <a href="/admin-reservations.html" class="sidebar-item active">
+        <span>📑</span> All Reservations
+      </a>
+      <div class="sidebar-spacer"></div>
+      <a href="#" class="sidebar-item logout-btn" style="color: var(--color-danger);">
+        <span>🚪</span> Log Out
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Campus Food Reservations Console</h1>
+          <p class="page-subtitle">Process incoming meal bookings with atomic inventory deduction.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="loadAdminReservations()">
+          <span>↻</span> Refresh List
+        </button>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary btn-sm admin-res-filter-btn" data-status="ALL">All Orders</button>
+        <button class="btn btn-secondary btn-sm admin-res-filter-btn" data-status="PENDING">⏱ Pending Only</button>
+        <button class="btn btn-secondary btn-sm admin-res-filter-btn" data-status="APPROVED">✓ Approved</button>
+        <button class="btn btn-secondary btn-sm admin-res-filter-btn" data-status="REJECTED">✕ Rejected</button>
+        <button class="btn btn-secondary btn-sm admin-res-filter-btn" data-status="CANCELLED">⊘ Cancelled</button>
+      </div>
+
+      <!-- Reservations Table Card -->
+      <div class="card">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Student Diner</th>
+                <th>Items & Portions</th>
+                <th>Total Price</th>
+                <th>Date & Time</th>
+                <th>Status</th>
+                <th>Fulfillment Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reservations-body">
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: 0.5rem;">Loading campus orders...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
+

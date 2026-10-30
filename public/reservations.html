@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Reservations | LastPlate</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <a href="/student-dashboard.html" class="brand-container">
+      <div class="brand-logo">LP</div>
+      <div>
+        <div class="brand-title">LastPlate</div>
+        <span class="brand-tagline">Good food. Zero uncertainty.</span>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="user-badge">
+        <span class="user-avatar-initial" id="user-display-initial">S</span>
+        <span id="user-display-name">Student</span>
+      </div>
+      <button class="btn btn-secondary btn-sm logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <span class="sidebar-heading">Student Portal</span>
+      <a href="/student-dashboard.html" class="sidebar-item">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="/menu.html" class="sidebar-item">
+        <span>🍔</span> Browse Menu
+      </a>
+      <a href="/reservations.html" class="sidebar-item active">
+        <span>📋</span> My Reservations
+      </a>
+      <div class="sidebar-spacer"></div>
+      <a href="#" class="sidebar-item logout-btn" style="color: var(--color-danger);">
+        <span>🚪</span> Log Out
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Food Reservations</h1>
+          <p class="page-subtitle">View booking statuses, cafeteria confirmations, and order history.</p>
+        </div>
+        <a href="/menu.html" class="btn btn-primary">
+          <span>+</span> New Reservation
+        </a>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary btn-sm res-filter-btn" data-status="ALL">All Orders</button>
+        <button class="btn btn-secondary btn-sm res-filter-btn" data-status="PENDING">⏱ Pending</button>
+        <button class="btn btn-secondary btn-sm res-filter-btn" data-status="APPROVED">✓ Approved</button>
+        <button class="btn btn-secondary btn-sm res-filter-btn" data-status="REJECTED">✕ Rejected</button>
+        <button class="btn btn-secondary btn-sm res-filter-btn" data-status="CANCELLED">⊘ Cancelled</button>
+      </div>
+
+      <!-- Reservations Table Card -->
+      <div class="card">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Item Details</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Placed At</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="my-reservations-body">
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: 0.5rem;">Loading reservations...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>
+

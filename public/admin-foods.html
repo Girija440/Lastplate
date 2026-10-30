@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Inventory Management | LastPlate Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <a href="/admin-dashboard.html" class="brand-container">
+      <div class="brand-logo" style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%);">AD</div>
+      <div>
+        <div class="brand-title">LastPlate Admin</div>
+        <span class="brand-tagline">Cafeteria Operations & Inventory Control</span>
+      </div>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="user-badge" style="background: #EEF2FF; border-color: #C7D2FE; color: #3730A3;">
+        <span class="user-avatar-initial" id="user-display-initial" style="background: #4F46E5;">A</span>
+        <span id="user-display-name">Administrator</span>
+      </div>
+      <button class="btn btn-secondary btn-sm logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <span class="sidebar-heading">Operations Portal</span>
+      <a href="/admin-dashboard.html" class="sidebar-item">
+        <span>📊</span> Overview & Stats
+      </a>
+      <a href="/admin-foods.html" class="sidebar-item active">
+        <span>📦</span> Food Inventory
+      </a>
+      <a href="/admin-reservations.html" class="sidebar-item">
+        <span>📑</span> All Reservations
+      </a>
+      <div class="sidebar-spacer"></div>
+      <a href="#" class="sidebar-item logout-btn" style="color: var(--color-danger);">
+        <span>🚪</span> Log Out
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Cafeteria Food Inventory</h1>
+          <p class="page-subtitle">Add new dishes, update prices, adjust stock, and manage item availability.</p>
+        </div>
+        <button class="btn btn-primary" id="open-add-food-btn">
+          <span>+</span> Add Food Item
+        </button>
+      </div>
+
+      <!-- Food Items Table Card -->
+      <div class="card">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Food Item</th>
+                <th>Category</th>
+                <th>Unit Price</th>
+                <th>Current Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-foods-body">
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: 0.5rem;">Loading food inventory...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD FOOD MODAL -->
+  <div class="modal-backdrop" id="add-food-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Food Item</h3>
+        <button class="modal-close" id="close-add-food-btn">&times;</button>
+      </div>
+      <form id="add-food-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="add-food-name">Food Name *</label>
+            <input type="text" id="add-food-name" class="form-control" placeholder="e.g. Paneer Roll" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="add-food-desc">Description</label>
+            <textarea id="add-food-desc" class="form-control" rows="2" placeholder="Brief dish description..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="food-category-select">Category *</label>
+              <select id="food-category-select" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="add-food-price">Price (₹) *</label>
+              <input type="number" id="add-food-price" class="form-control" step="0.5" min="0" placeholder="50.00" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="add-food-qty">Initial Stock Quantity *</label>
+              <input type="number" id="add-food-qty" class="form-control" min="0" value="20" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="add-food-status">Status *</label>
+              <select id="add-food-status" class="form-control">
+                <option value="AVAILABLE">AVAILABLE</option>
+                <option value="SOLD_OUT">SOLD_OUT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="add-food-image">Image URL</label>
+            <input type="url" id="add-food-image" class="form-control" placeholder="https://example.com/food.jpg">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('add-food-modal').classList.remove('show')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save to Catalog</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT FOOD MODAL -->
+  <div class="modal-backdrop" id="edit-food-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Food Item</h3>
+        <button class="modal-close" id="close-edit-food-btn">&times;</button>
+      </div>
+      <form id="edit-food-form">
+        <input type="hidden" id="edit-food-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="edit-food-name">Food Name *</label>
+            <input type="text" id="edit-food-name" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-food-desc">Description</label>
+            <textarea id="edit-food-desc" class="form-control" rows="2"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-food-category-select">Category *</label>
+              <select id="edit-food-category-select" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="edit-food-price">Price (₹) *</label>
+              <input type="number" id="edit-food-price" class="form-control" step="0.5" min="0" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-food-qty">Available Stock *</label>
+              <input type="number" id="edit-food-qty" class="form-control" min="0" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="edit-food-status">Status *</label>
+              <select id="edit-food-status" class="form-control">
+                <option value="AVAILABLE">AVAILABLE</option>
+                <option value="SOLD_OUT">SOLD_OUT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="edit-food-image">Image URL</label>
+            <input type="url" id="edit-food-image" class="form-control">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('edit-food-modal').classList.remove('show')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Food Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
+

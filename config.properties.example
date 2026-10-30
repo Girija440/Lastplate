@@ -1,0 +1,13 @@
+# LastPlate Database Configuration Example
+db.url=jdbc:mysql://localhost:3306/lastplate_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+db.user=root
+db.password=YOUR_MYSQL_PASSWORD
+
+# Default Admin Bootstrap (Generated securely on first run)
+admin.default.email=admin@lastplate.com
+admin.default.password=admin123
+admin.default.name=System Administrator
+
+# Server Port
+server.port=8080
+

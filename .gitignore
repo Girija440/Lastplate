@@ -1,0 +1,27 @@
+
+# Private database credentials
+config.properties
+.env
+.env.*
+
+# Compiled Java files
+*.class
+bin/
+target/
+
+# Log files
+*.log
+
+# IDE settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.ctxt
+.mtj.tmp/
+hs_err_pid*
+replay_pid*
